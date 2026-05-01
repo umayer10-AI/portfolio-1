@@ -26,7 +26,7 @@ export default function Hero() {
   ];
 
   return (
-    <section id="home" className="grid lg:grid-cols-[1.2fr_0.8fr] items-center gap-16 min-h-screen pt-40 px-8 max-w-[1200px] mx-auto">
+    <section id="home" className="grid lg:grid-cols-[1.2fr_0.8fr] items-center gap-16 min-h-screen pt-40 px-8 max-w-[1200px] mx-auto overflow-hidden">
       <div>
         <motion.h1 
           initial={{ opacity: 0, x: -50 }}
