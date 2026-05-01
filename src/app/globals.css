@@ -1,21 +1,16 @@
 @import "tailwindcss";
 
+/* ================= THEME ================= */
 @theme {
   --color-bg-dark: #020617;
   --color-bg-card: #0f172a;
   --color-accent-cyan: #22d3ee;
   --color-accent-blue: #3b82f6;
-  
+
   --background-image-accent-gradient: linear-gradient(135deg, #22d3ee, #3b82f6);
-  
-  --animate-orbit: orbitRotate var(--duration, 20s) linear infinite;
-  
-  @keyframes orbitRotate {
-    from { transform: rotate(calc(360deg / var(--total) * var(--index))); }
-    to { transform: rotate(calc(360deg / var(--total) * var(--index) + 360deg)); }
-  }
 }
 
+/* ================= BASE ================= */
 @layer base {
   :root {
     --bg-dark: #020617;
@@ -40,6 +35,7 @@
   }
 }
 
+/* ================= COMPONENTS ================= */
 @layer components {
   .btn-primary {
     @apply bg-[image:var(--accent-gradient)] text-white px-7 py-3 rounded-full font-semibold flex items-center gap-2 shadow-lg shadow-cyan-500/30 transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-cyan-500/50;
@@ -58,12 +54,55 @@
   }
 }
 
+/* ================= ORBIT SYSTEM (FIXED) ================= */
 @layer utilities {
-  .orbit-rotate {
-    animation: orbitRotate calc(20s + var(--index) * 2s) linear infinite;
+
+  /* Orbit wrapper (center fix) */
+  .orbit-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    height: 300px;
+    pointer-events: none;
+  }
+
+  /* Each rotating item */
+  .orbit-item {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform-origin: center;
+    animation: orbit-spin calc(12s + var(--index) * 2s) linear infinite;
+  }
+
+  /* Positioning items in circle */
+  .orbit-item span {
+    display: inline-block;
+    transform:
+      rotate(calc(360deg / var(--total) * var(--index)))
+      translateY(-150px)
+      rotate(calc(-360deg / var(--total) * var(--index)));
+  }
+
+  /* Rotation animation */
+  @keyframes orbit-spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  /* Optional hover pause (🔥 premium feel) */
+  .orbit-container:hover .orbit-item {
+    animation-play-state: paused;
   }
 }
 
+/* ================= SCROLLBAR ================= */
 ::-webkit-scrollbar {
   width: 10px;
 }
